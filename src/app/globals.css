@@ -1,26 +1,151 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --primary: #f97316;
+  --primary-hover: #ea580c;
+  --surface: #ffffff;
+  --border: #e2e8f0;
+  --muted: #64748b;
+  --radius: 0.75rem;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0f172a;
+    --foreground: #f8fafc;
+    --primary: #f97316;
+    --primary-hover: #ea580c;
+    --surface: #1e293b;
+    --border: #334155;
+    --muted: #94a3b8;
   }
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
+  background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+.btn:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+.btn-ghost {
+  background: transparent;
+  border: none;
+}
+.btn-ghost:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+/* ---- Inputs ---- */
+.input {
+  display: flex;
+  height: 2.5rem;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  background-color: var(--surface);
+  color: var(--foreground);
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2);
+}
+.input:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ---- Phone Mockup ---- */
+.phone-mockup {
+  width: 320px;
+  height: 650px;
+  border-radius: 40px;
+  border: 12px solid #1e293b;
+  background: var(--surface);
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+}
+.phone-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 25px;
+  background: #1e293b;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  z-index: 10;
+}
+
+/* ---- Animations ---- */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4); }
+  50% { box-shadow: 0 0 20px 0 rgba(249, 115, 22, 0.8); }
+}
+@keyframes scanning {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+.animate-slide-up { animation: slideUp 0.4s ease-out forwards; }
+.scanning-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--primary);
+  box-shadow: 0 0 10px var(--primary);
+  animation: scanning 2s linear infinite;
+  z-index: 20;
 }
